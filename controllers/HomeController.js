@@ -1,3 +1,4 @@
 exports.Index = async function(request, response) {
-    response.render('home/index');
+    console.log(request.headers['authorization']);
+    return response.render('home/index');
 }
