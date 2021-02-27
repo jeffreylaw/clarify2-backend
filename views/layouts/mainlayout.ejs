@@ -6,11 +6,11 @@
 <body>
     <div>
         <a href='/'>Home</a>
-        <a href='/register'>Register</a>
 
         <% if (typeof token != 'undefined' && token) { %>
             <a href='/logout'>Logout</a>
         <% } else {%>
+            <a href='/register'>Register</a>
             <a href='/login'>Login</a>
         <% } %>
     </div>
