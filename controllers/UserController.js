@@ -21,7 +21,7 @@ exports.LoginUser = async function(request, response) {
         const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
         if (match) {
             console.log(accessToken);
-            response.setHeader('Authorization', 'Bearer ' + accessToken);
+            response.cookie('jwt', accessToken, { maxAge: 9000000, httpOnly: true });
             return response.redirect('/');
         } else {
             return response.send('Wrong password');
@@ -52,4 +52,10 @@ exports.RegisterUser = async function(request, response) {
         return response.status(404).end();
     }
     return response.render('login/index');
+}
+
+exports.Logout = async function(request, response) {
+    const body = request.body;
+    response.clearCookie('jwt');
+    return response.redirect('/');
 }

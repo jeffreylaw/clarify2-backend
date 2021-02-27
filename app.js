@@ -7,6 +7,7 @@ const app = express();
 
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(res => {
@@ -21,6 +22,8 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true })); // express parser for formdata
 app.use(express.json()); // express json-parser transforms raw data of a request, parses into a JS object, attaches it to request object as request.body 
+app.use(cookieParser());
+
 
 // const requestLogger = (request, response, next) => {
 //     console.log('Method:', request.method);

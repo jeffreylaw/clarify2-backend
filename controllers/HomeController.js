@@ -1,4 +1,7 @@
+
+
 exports.Index = async function(request, response) {
-    console.log(request.headers['authorization']);
-    return response.render('home/index');
+    console.log('/')
+    console.log(request.cookies);
+    return response.render('home/index', { 'token': request.cookies.jwt });
 }
