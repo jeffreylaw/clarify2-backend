@@ -13,7 +13,7 @@ exports.LoginUser = async function(request, response) {
 
     const user = await User.findOne({ username: body.username });
     if (!user) {
-        return response.send('No such user');
+        return response.status(400).send('No such user');
     }
 
     try {
