@@ -1,0 +1,45 @@
+<% layout('../layouts/mainlayout.ejs') -%>
+<h1>Admin view</h1>
+
+<form action='/admin/ModifyUser' method='POST' style='border-style:solid;'>
+
+    <label for='user'>
+        Select an user to modify permissions:
+    </label>
+    <br>
+    <select name='user' id='user'>
+        <% for (let i=0; i<users.length; i++) { %>
+            <option value=<%= users[i].username %>><%= users[i].username %></option>
+        <% } %>
+    </select>
+    <br>
+
+    <label for='role'>
+        Select new role:
+    </label>
+    <br>
+    <select name='role' id='role'>
+        <option value='admin'>Admin</option>
+        <option value='instructor'>Instructor</option>
+        <option value='mod'>Mod</option>
+        <option value='user'>User</option>
+    </select>
+    <br>
+    <br>
+    <input type='submit' value='Update user'>
+</form>
+
+<form action='/admin/DeleteUser' method='POST' style='border-style:solid;'>
+    <label>
+        Select a user to delete:
+    </label>
+    <br>
+    <select name='user' id='delete-user'>
+        <% for (let i=0; i<users.length; i++) { %>
+            <option value=<%= users[i].username %>><%= users[i].username %></option>
+        <% } %>
+    </select>
+    <input type='submit' value='Delete user'>
+</form>
+
+<%= message %>
