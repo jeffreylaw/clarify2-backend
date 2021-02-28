@@ -21,7 +21,6 @@ exports.ModifyUserPermissions = async function(request, response) {
 
 exports.DeleteUser = async function(request, response) {
     const body = request.body;
-    const decodedToken = jwt.verify(request.cookies.jwt, process.env.SECRET_TOKEN);
     const result = await User.deleteOne({ username: body.user });
     const users = await User.find();
     if (result.ok == 1) {

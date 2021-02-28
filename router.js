@@ -2,6 +2,9 @@ const HomeController = require('./controllers/HomeController');
 const UserController = require('./controllers/UserController');
 const AdminController = require('./controllers/AdminController');
 
+const checkRole = require('./middleware/checkRole').checkRole;
+const isAuth = require('./middleware/isAuth').isAuth;
+
 module.exports = function(app) {
     app.get('/', HomeController.Index);
     
@@ -12,6 +15,5 @@ module.exports = function(app) {
     app.get('/logout', UserController.Logout);
     app.get('/admin', AdminController.Admin);
     app.post('/admin/ModifyUser', AdminController.ModifyUserPermissions);
-    app.post('/admin/DeleteUser', AdminController.DeleteUser);
-
+    app.post('/admin/DeleteUser', isAuth, checkRole(['admin', 'user']), AdminController.DeleteUser);
 }

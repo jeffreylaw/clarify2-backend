@@ -9,10 +9,8 @@ exports.Login = async function(request, response) {
 
 exports.LoginUser = async function(request, response) {
     const body = request.body;
-    console.log(body);
 
     const user = await User.findOne({ username: body.username });
-    console.log(user);
     if (!user) {
         return response.status(400).send('No such user');
     }
