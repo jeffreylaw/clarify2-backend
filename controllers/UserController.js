@@ -12,6 +12,7 @@ exports.LoginUser = async function(request, response) {
     console.log(body);
 
     const user = await User.findOne({ username: body.username });
+    console.log(user);
     if (!user) {
         return response.status(400).send('No such user');
     }
@@ -20,7 +21,6 @@ exports.LoginUser = async function(request, response) {
         const match = await bcrypt.compare(body.password, user.password);
         const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
         if (match) {
-            console.log(accessToken);
             response.cookie('jwt', accessToken, { maxAge: 9000000, httpOnly: true });
             return response.redirect('/');
         } else {
@@ -47,11 +47,13 @@ exports.RegisterUser = async function(request, response) {
             password: passwordHash
         });
         let savedUser = await user.save();
+        const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
+        response.cookie('jwt', accessToken, { maxAge: 9000000, httpOnly: true });
+        return response.redirect('/');
     } catch (error) {
         console.log('Error: ' + error);
         return response.status(404).end();
     }
-    return response.render('login/index');
 }
 
 exports.Logout = async function(request, response) {
