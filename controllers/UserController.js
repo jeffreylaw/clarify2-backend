@@ -25,9 +25,14 @@ exports.Users = async function(request, response) {
 
 exports.User = async function(request, response) {
     const user = await User.findOne({ _id: request.params.id });
-    return response.json({ user });
+    if (user) {
+        return response.json({ user });
+    } else {
+        return response.status(404).json({ message: 'No user found' });
+    }
 }
 
+// @TODO Need to add role setting, model has role default to user atm
 exports.CreateUser = async function(request, response) {
     const body = request.body;
     const saltRounds = 10;
@@ -41,8 +46,16 @@ exports.CreateUser = async function(request, response) {
     return response.json({ token, roles: user.roles})
 }
 
-exports.UpdateUser = async function(request, response) {
 
+// @TODO once we decide all the fields a user should have
+exports.UpdateUser = async function(request, response) {
+    const body = request.body;
+    const result = await User.updateOne({ _id: request.params.id }, { role: body.role });
+    if (result.ok == 1) {
+        return response.json({ message: 'Updated user' });
+    } else {
+        return response.status(400).json({ message: 'Failed to update user' });
+    }
 }
 
 exports.DeleteUser = async function(request, response) {
@@ -50,6 +63,6 @@ exports.DeleteUser = async function(request, response) {
     if (result.ok == 1) {
         return response.json({ message: 'Deleted user' });
     } else {
-        return response.json({ message: 'Failed to delete user' });
+        return response.status(400).json({ message: 'Failed to delete user' });
     }
 }

@@ -25,14 +25,6 @@ app.use(express.json()); // express json-parser transforms raw data of a request
 app.use(cookieParser());
 
 
-// const requestLogger = (request, response, next) => {
-//     console.log('Method:', request.method);
-//     console.log('Path:  ', request.path);
-//     console.log('Body:  ', request.body);
-//     next();
-// }
-
-// app.use(requestLogger);
 
 require('./router')(app);
 
