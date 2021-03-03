@@ -4,6 +4,7 @@ const path = require('path');
 const engine = require('ejs-locals');
 const express = require('express'); // Importing express function to create express app
 const app = express();
+require('express-async-errors')
 
 const cors = require('cors');
 const mongoose = require('mongoose');
