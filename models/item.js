@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
     title: {
-        type: String
-    },
-    text: {
         type: String
     },
     date: {
         type: Date
     },
+    posts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    }],
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
 });
 
-postSchema.set('toJSON', {
+threadSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
@@ -24,6 +25,6 @@ postSchema.set('toJSON', {
     }
 });
 
-const Post = mongoose.model('Post', threadSchema);
+const Item = mongoose.model('Item', threadSchema);
 
-module.exports = Post;
+module.exports = Item;

@@ -1,33 +1,30 @@
 const mongoose = require('mongoose');
 
-const threadSchema = new mongoose.Schema({
-    title: {
-        type: String
-    },
+const commentSchema = new mongoose.Schema({
     text: {
         type: String
     },
     date: {
         type: Date
     },
-    posts: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Post'
+    comments: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Comment'
     }],
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
-});
+})
 
-threadSchema.set('toJSON', {
+commentSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
         delete returnedObject.__v
-    }
+    }   
 });
 
-const Thread = mongoose.model('Thread', threadSchema);
+const Comment = mongoose.model('Comment', userSchema);
 
-module.exports = Thread;
+module.exports = Comment;

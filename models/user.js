@@ -12,15 +12,25 @@ const userSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
-        required: false
+        // required: false
     },
     lastName: {
         type: String,
-        required: false
+        // required: false
+    },
+    // @TODO Need to validate this validator
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        // required: 'Email address is required',
+        validate: [validateEmail, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     role: {
         type: String,
-        enum: ['admin', 'instructor', 'mod', 'user'],
+        enum: ['admin', 'instructor', 'mod', 'user', 'dev'],
         default: 'user'
     }
 });
