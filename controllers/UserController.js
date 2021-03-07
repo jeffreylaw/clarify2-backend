@@ -4,60 +4,65 @@ const User = require('../models/user');
 
 
 exports.Login = async function(request, response) {
-    return response.render('login/index');
-}
-
-exports.LoginUser = async function(request, response) {
     const body = request.body;
-    console.log(body);
-
     const user = await User.findOne({ username: body.username });
-    console.log(user);
     if (!user) {
-        return response.status(400).send('No such user');
+        return response.status(404).json({ message: 'User does not exist' });
     }
-
-    try {
-        const match = await bcrypt.compare(body.password, user.password);
-        const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
-        if (match) {
-            response.cookie('jwt', accessToken, { maxAge: 9000000, httpOnly: true });
-            return response.redirect('/');
-        } else {
-            return response.send('Wrong password');
-        }
-    } catch (error) {
-        console.log('Failure in LoginUser: ' + error);
+    const match = await bcrypt.compare(body.password, user.password);
+    const token = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
+    if (match) {
+        return response.json({ token, roles: user.roles})
+    } else {
+        return response.status(401).json({ message: 'Wrong password' });
     }
 }
 
-
-exports.Register = async function(request, response) {
-    return response.render('register/index');
+exports.Users = async function(request, response) {
+    const users = await User.find();
+    return response.json({ users });
 }
 
-exports.RegisterUser = async function(request, response) {
+exports.User = async function(request, response) {
+    const user = await User.findOne({ _id: request.params.id });
+    if (user) {
+        return response.json({ user });
+    } else {
+        return response.status(404).json({ message: 'No user found' });
+    }
+}
+
+// @TODO Need to add role setting, model has role default to user atm
+exports.CreateUser = async function(request, response) {
     const body = request.body;
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
+    const user = new User({
+        username: body.username,
+        password: passwordHash
+    });
+    let savedUser = await user.save();
+    const token = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
+    return response.json({ token, roles: user.roles})
+}
 
-    try {
-        const user = new User({
-            username: body.username,
-            password: passwordHash
-        });
-        let savedUser = await user.save();
-        const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
-        response.cookie('jwt', accessToken, { maxAge: 9000000, httpOnly: true });
-        return response.redirect('/');
-    } catch (error) {
-        console.log('Error: ' + error);
-        return response.status(404).end();
+
+// @TODO once we decide all the fields a user should have
+exports.UpdateUser = async function(request, response) {
+    const body = request.body;
+    const result = await User.updateOne({ _id: request.params.id }, { role: body.role });
+    if (result.ok == 1) {
+        return response.json({ message: 'Updated user' });
+    } else {
+        return response.status(400).json({ message: 'Failed to update user' });
     }
 }
 
-exports.Logout = async function(request, response) {
-    const body = request.body;
-    response.clearCookie('jwt');
-    return response.redirect('/');
+exports.DeleteUser = async function(request, response) {
+    const result = await User.deleteOne({ _id: request.params.id });
+    if (result.ok == 1) {
+        return response.json({ message: 'Deleted user' });
+    } else {
+        return response.status(400).json({ message: 'Failed to delete user' });
+    }
 }
