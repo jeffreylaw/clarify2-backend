@@ -8,16 +8,16 @@ const itemSchema = new mongoose.Schema({
         type: Date
     },
     posts: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
     }],
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
 });
 
-threadSchema.set('toJSON', {
+itemSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
@@ -25,6 +25,6 @@ threadSchema.set('toJSON', {
     }
 });
 
-const Item = mongoose.model('Item', threadSchema);
+const Item = mongoose.model('Item', itemSchema);
 
 module.exports = Item;

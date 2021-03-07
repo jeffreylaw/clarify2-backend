@@ -8,11 +8,11 @@ const commentSchema = new mongoose.Schema({
         type: Date
     },
     comments: [{
-        type: SchemaTypes.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
 })
@@ -25,6 +25,6 @@ commentSchema.set('toJSON', {
     }   
 });
 
-const Comment = mongoose.model('Comment', userSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

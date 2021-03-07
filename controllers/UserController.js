@@ -39,11 +39,18 @@ exports.CreateUser = async function(request, response) {
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
     const user = new User({
         username: body.username,
-        password: passwordHash
+        password: passwordHash,
+        firstName: body.firstName,
+        lastName: body.lastName
     });
     let savedUser = await user.save();
+    console.log(savedUser);
     const token = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
     return response.json({ token, roles: user.roles})
+    // try {
+
+    // } catch {
+    // }
 }
 
 

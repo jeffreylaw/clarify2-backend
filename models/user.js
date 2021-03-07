@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -18,16 +19,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         // required: false
     },
-    // @TODO Need to validate this validator
-    email: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        // required: 'Email address is required',
-        validate: [validateEmail, 'Please fill a valid email address'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
-    },
+    // email: {
+    //     type: String,
+    //     trim: true,
+    //     lowercase: true,
+    //     unique: true,
+    //     required: "Email required",
+    //     validate: {
+    //         validator: function(i) {
+    //             return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(i);
+    //         },
+    //         message: "Please enter a valid email"
+    //     },
+    // },
     role: {
         type: String,
         enum: ['admin', 'instructor', 'mod', 'user', 'dev'],
@@ -42,6 +46,8 @@ userSchema.set('toJSON', {
         delete returnedObject.__v
     }
 });
+
+userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model('User', userSchema);
 

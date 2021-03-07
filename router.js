@@ -30,9 +30,9 @@ module.exports = function(app) {
     app.delete('/api/items/:id', ItemController.DeleteItem);
 
     app.get('/api/posts', PostController.Posts);
-    app.post('/api/posts', PostControllers.CreatePost);
-    app.put('/api/posts/:id', PostControllers.UpdatePost);
-    app.delete('/api/posts/:id', PostControllers.DeletePost);
+    app.post('/api/posts', PostController.CreatePost);
+    app.put('/api/posts/:id', PostController.UpdatePost);
+    app.delete('/api/posts/:id', PostController.DeletePost);
 
     app.get('/api/comments', CommentController.Comments);
     app.get('/api/comments/:id', CommentController.Comment);

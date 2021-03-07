@@ -3,11 +3,6 @@ const supertest = require('supertest');
 const request = supertest(app);
 
 describe('Testing routes', () => {
-    it('Home page 200 OK', async done => {
-      const response = await request.get('/');
-      expect(response.status).toBe(200);
-      done();
-    });
 
     it('Login page 200 OK', async done => {
       const response = await request.get('/login');

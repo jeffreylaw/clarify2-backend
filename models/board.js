@@ -15,7 +15,7 @@ const boardSchema = new mongoose.Schema({
         type: Date
     },
     threads: [{ 
-        type: Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'Thread' 
     }]
 });
@@ -28,6 +28,6 @@ boardSchema.set('toJSON', {
     }
 });
 
-const Board = mongoose.model('Board', userSchema);
+const Board = mongoose.model('Board', boardSchema);
 
 module.exports = Board;
