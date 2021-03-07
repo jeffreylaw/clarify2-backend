@@ -16,17 +16,26 @@ exports.Post = async function(request, response) {
     }
 }
 
+// @TODO Adding user id
 exports.CreatePost = async function(request, response) {
     const body = request.body;
-    
+    const post = new Post({
+        title: body.title,
+        text: body.text,
+        date: body.date,
+
+    });
+    let savedPost = await post.save();
+    return response.json({ post: savedPost });    
 }
 
+// @TODO Sprint 2
 exports.UpdatePost = async function(request, response) {
 
 }
 
 exports.DeletePost = async function(request, response) {
-    const result = await Item.deleteOne({ _id: request.params.id });
+    const result = await Post.deleteOne({ _id: request.params.id });
     if (result.ok == 1) {
         return response.json({ message: 'Deleted post' });
     } else {

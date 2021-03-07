@@ -24,6 +24,6 @@ postSchema.set('toJSON', {
     }
 });
 
-const Post = mongoose.model('Post', threadSchema);
+const Post = mongoose.model('Post', postSchema);
 
 module.exports = Post;

@@ -16,16 +16,20 @@ exports.Item = async function(request, response) {
     }
 }
 
-// @TODO Decide how to add user
+// @TODO Adding user id
 exports.CreateItem = async function(request, response) {
     const body = request.body;
     const item = new Item({
- 
+        title: body.title,
+        date: body.date,
+        posts: [],
+
     });
-    let savedBoard = await board.save();
-    return response.json({ board: savedBoard });
+    let savedItem = await item.save();
+    return response.json({ item: savedItem });
 }
 
+// @TODO Sprint 2
 exports.UpdateItem = async function(request, response) {
 
 }

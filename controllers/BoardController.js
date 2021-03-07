@@ -27,13 +27,14 @@ exports.CreateBoard = async function(request, response) {
     return response.json({ board: savedBoard });
 }
 
+// @TODO Sprint 2
 exports.UpdateBoard = async function(request, response) {
-    const body = request.body;
-    const result = await Board.updateOne({ _id: request.params.id }, { 
-        code: body.code,
-        name: body.name,
-        instructor: body.instructor 
-    });
+    // const body = request.body;
+    // const result = await Board.updateOne({ _id: request.params.id }, { 
+    //     code: body.code,
+    //     name: body.name,
+    //     instructor: body.instructor 
+    // });
 
 }
 
