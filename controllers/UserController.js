@@ -1,3 +1,4 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
@@ -44,13 +45,8 @@ exports.CreateUser = async function(request, response) {
         lastName: body.lastName
     });
     let savedUser = await user.save();
-    console.log(savedUser);
-    const token = jwt.sign(JSON.stringify(user), process.env.SECRET_TOKEN);
+    const token = jwt.sign(JSON.stringify(savedUser), process.env.SECRET_TOKEN);
     return response.json({ token, roles: user.roles})
-    // try {
-
-    // } catch {
-    // }
 }
 
 

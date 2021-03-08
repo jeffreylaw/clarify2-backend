@@ -4,8 +4,8 @@ const ItemController = require('./controllers/ItemController');
 const PostController = require('./controllers/PostController');
 const CommentController = require('./controllers/CommentController');
 
-const checkRole = require('./middleware/checkRole').checkRole;
-const isAuth = require('./middleware/isAuth').isAuth;
+const verifyToken = require('./middleware/verifyToken');
+const verifyRole = require('./middleware/verifyRole');
 
 module.exports = function(app) {
     
@@ -19,9 +19,9 @@ module.exports = function(app) {
     app.put('/api/users/:id', UserController.UpdateUser);
     
     app.get('/api/boards', BoardController.Boards);
-    app.post('/api/boards', BoardController.CreateBoard);
+    app.post('/api/boards', verifyToken, BoardController.CreateBoard);
     app.put('/api/boards/:id', BoardController.UpdateBoard);
-    app.delete('/api/boards/:id', BoardController.DeleteBoard);
+    app.delete('/api/boards/:id', verifyToken, verifyRole(['admin']), BoardController.DeleteBoard);
 
     app.get('/api/items', ItemController.Items);
     app.get('/api/items/:id', ItemController.Item);
