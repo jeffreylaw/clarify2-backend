@@ -19,11 +19,12 @@ exports.Comment = async function(request, response) {
 // @TODO Adding user id
 exports.CreateComment = async function(request, response) {
     const body = request.body;
+    const user = request.user;
     const comment = new Comment({
         text: body.text,
         date: body.date,
         comments: [], // For replies, future feature.
-
+        user: user.id
     });
     let savedComment = await comment.save();
     return response.json({ comment: savedComment });

@@ -21,7 +21,8 @@ exports.CreateBoard = async function(request, response) {
     const board = new Board({
         code: body.code,
         name: body.name,
-        instructor: body.instructor
+        instructor: body.instructor,
+        date: new Date()
     });
     let savedBoard = await board.save();
     return response.json({ board: savedBoard });
@@ -35,7 +36,6 @@ exports.UpdateBoard = async function(request, response) {
     //     name: body.name,
     //     instructor: body.instructor 
     // });
-
 }
 
 exports.DeleteBoard = async function(request, response) {

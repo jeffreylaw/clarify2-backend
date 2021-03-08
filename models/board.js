@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const boardSchema = new mongoose.Schema({
     code: {
         type: String,
-        required: true
     },
     name: {
         type: String,
@@ -12,11 +11,11 @@ const boardSchema = new mongoose.Schema({
         type: String,
     },
     date: {
-        type: Date
+        type: Date,
     },
-    threads: [{ 
+    items: [{ 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Thread' 
+        ref: 'Item' 
     }]
 });
 

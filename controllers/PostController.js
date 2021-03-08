@@ -16,14 +16,14 @@ exports.Post = async function(request, response) {
     }
 }
 
-// @TODO Adding user id
 exports.CreatePost = async function(request, response) {
     const body = request.body;
+    const user = request.user;
     const post = new Post({
         title: body.title,
         text: body.text,
-        date: body.date,
-
+        date: new Date(),
+        user: user.id
     });
     let savedPost = await post.save();
     return response.json({ post: savedPost });    

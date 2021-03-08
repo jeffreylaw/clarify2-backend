@@ -16,14 +16,13 @@ exports.Item = async function(request, response) {
     }
 }
 
-// @TODO Adding user id
 exports.CreateItem = async function(request, response) {
     const body = request.body;
+    const user = request.user;
     const item = new Item({
         title: body.title,
-        date: body.date,
-        posts: [],
-
+        date: new Date(),
+        user: user.id
     });
     let savedItem = await item.save();
     return response.json({ item: savedItem });
