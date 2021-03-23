@@ -19,7 +19,7 @@ module.exports = function(app) {
     app.delete('/api/users/:id', UserController.DeleteUser);
     
     app.get('/api/boards', BoardController.Boards);
-    app.post('/api/boards', verifyToken, BoardController.CreateBoard);
+    app.post('/api/boards', BoardController.CreateBoard);
     app.put('/api/boards/:id', BoardController.UpdateBoard);
     app.delete('/api/boards/:id', BoardController.DeleteBoard);
 

@@ -39,10 +39,10 @@ app.use(unknownEndpoint);
 
 
 // ejs templating
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
+// app.engine('ejs', engine);
+// app.set('view engine', 'ejs');
 
 // view folder
-app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views'));
 
 module.exports = app;
